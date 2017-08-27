@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PMTaskSchedApp", "PMTaskSchedApp\PMTaskSchedApp.vcxproj", "{82A0332C-EFB5-4D0F-AC4C-943CE5713042}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Debug|x64.ActiveCfg = Debug|x64
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Debug|x64.Build.0 = Debug|x64
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Debug|x86.ActiveCfg = Debug|Win32
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Debug|x86.Build.0 = Debug|Win32
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Release|x64.ActiveCfg = Release|x64
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Release|x64.Build.0 = Release|x64
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Release|x86.ActiveCfg = Release|Win32
+		{82A0332C-EFB5-4D0F-AC4C-943CE5713042}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D97D8A4C-B755-4E2B-BE11-6224F004FE28}
+	EndGlobalSection
+EndGlobal
