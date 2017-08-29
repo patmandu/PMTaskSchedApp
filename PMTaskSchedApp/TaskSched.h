@@ -72,6 +72,7 @@ public:
 		FAIL_NoError = 0,
 		FAIL_StartCom,
 		FAIL_CoCreate,
+		FAIL_InvalidArgs,
 		FAIL_CoInitSecurity,
 		FAIL_InvalidObject,
 		FAIL_Connect,
