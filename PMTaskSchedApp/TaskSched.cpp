@@ -125,6 +125,18 @@ HRESULT TaskSched::CreateTask(CString sExecutable, CString sArgs, CString sTaskN
 	{
 		// we're ready to talk to the service...
 		try {
+
+			// do some basic arg validation
+			if (sExecutable.GetLength() == 0 ||
+				sTaskName.GetLength() == 0 ||
+				uWhen == 0)
+			{
+				// invalid args
+				hrResult = E_INVALIDARG;
+				setFailOrigin(FAIL_InvalidArgs);
+				throw TSFailure(FAIL_InvalidArgs);
+			}
+
 			//  Connect to the task service.
 			hrResult = TESTFAIL(FAIL_Connect, pTaskService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()));
 			if (FAILED(hrResult))

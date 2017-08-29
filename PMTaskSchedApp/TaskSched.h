@@ -9,7 +9,7 @@
 // if the location matches the intended origin, return E_FAIL to simulate failure
 #define TESTFAIL(curLoc, call) ((curLoc)==uFailAt?E_FAIL:(call))
 #else
-// production version makes real call always
+// production version makes real call always 
 #define TESTFAIL(curLoc, call) (call)
 #endif
 
