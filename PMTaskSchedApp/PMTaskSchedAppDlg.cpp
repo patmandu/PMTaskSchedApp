@@ -80,30 +80,30 @@ BOOL CPMTaskSchedAppDlg::OnInitDialog()
 
 	// IDM_ABOUTBOX must be in the system command range.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
+ASSERT(IDM_ABOUTBOX < 0xF000);
 
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
+CMenu* pSysMenu = GetSystemMenu(FALSE);
+if (pSysMenu != NULL)
+{
+	BOOL bNameValid;
+	CString strAboutMenu;
+	bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+	ASSERT(bNameValid);
+	if (!strAboutMenu.IsEmpty())
 	{
-		BOOL bNameValid;
-		CString strAboutMenu;
-		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
-		ASSERT(bNameValid);
-		if (!strAboutMenu.IsEmpty())
-		{
-			pSysMenu->AppendMenu(MF_SEPARATOR);
-			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-		}
+		pSysMenu->AppendMenu(MF_SEPARATOR);
+		pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 	}
+}
 
-	// Set the icon for this dialog.  The framework does this automatically
-	//  when the application's main window is not a dialog
-	SetIcon(m_hIcon, TRUE);			// Set big icon
-	SetIcon(m_hIcon, FALSE);		// Set small icon
+// Set the icon for this dialog.  The framework does this automatically
+//  when the application's main window is not a dialog
+SetIcon(m_hIcon, TRUE);			// Set big icon
+SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
+// TODO: Add extra initialization here
 
-	return TRUE;  // return TRUE  unless you set the focus to a control
+return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
 void CPMTaskSchedAppDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -155,19 +155,14 @@ HCURSOR CPMTaskSchedAppDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-
-
-
-
 void CPMTaskSchedAppDlg::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
+	HRESULT hrResult = E_FAIL;
 
 	// Get path to executable
 	CString sExecutable;
 	GetDlgItemText(IDC_EDIT1, sExecutable);
-	
+
 	// Get arguments
 	CString sArgs;
 	GetDlgItemText(IDC_EDIT2, sArgs);
@@ -175,22 +170,48 @@ void CPMTaskSchedAppDlg::OnBnClickedOk()
 	// Get delay
 	CString sDelay;
 	GetDlgItemText(IDC_EDIT3, sDelay);
-	
-	// Call task scheduler
+	unsigned uDelay = _ttoi(sDelay);
 
-	HRESULT hrResult;
-	TaskSched theTS;
+	// make sure delay is at least 1 second
+	if (uDelay > 0)
+	{
 
-	hrResult = theTS.init();
+		// make sure executable file exists
+		if (PathFileExists(sExecutable))
+		{
+			// Call task scheduler
+			TaskSched theTS;
+
+			hrResult = theTS.init();
+
+			if (!FAILED(hrResult))
+			{
+				CString sTaskname = _T("PMTask");
+				hrResult = theTS.CreateTask(sExecutable, sArgs, sTaskname, uDelay);
+			}
+
+			// display the results...
+			if (FAILED(hrResult))
+			{
+				MessageBox(_com_error(hrResult).ErrorMessage(), _T("Create task failed"), MB_ICONERROR);
+			}
+			else
+			{
+				MessageBox(_T("Success"), _T("It worked!"), MB_ICONASTERISK);
+			}
+		}
+		else
+		{
+			MessageBox(sExecutable, _T("File Not Found"), MB_ICONERROR);
+		}
+	}
+	else
+	{
+		MessageBox(_T("Must be at least 1"), _T("Bad Delay"), MB_ICONERROR);
+	}
 
 	if (!FAILED(hrResult))
-	{
-		unsigned uDelay = _ttoi(sDelay);
-		CString sTaskname = _T("PMTask");
-		hrResult = theTS.CreateTask(sExecutable, sArgs, sTaskname, uDelay);
-	}
-		
-	CDialogEx::OnOK();
+		CDialogEx::OnOK();
 }
 
 
